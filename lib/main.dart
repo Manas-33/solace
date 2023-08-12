@@ -12,16 +12,47 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: "Solace",
+//       debugShowCheckedModeBanner: false,
+//       home: Scaffold(
+//         body: Container(),
+//       ),
+//     );
+//   }
+// }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Solace",
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(),
+    return MultiProvider(
+      providers: const [],
+      child: MaterialApp(
+        title: "Solace",
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(
+                    color: secondaryColor,
+                  );
+                } else if (snapshot.hasData) {
+                  return const HomePage(); //send to main app flow
+                } else if (snapshot.hasError) {
+                  return (const Text("There was an Error!"));
+                } else {
+                  return const HomePage(); // send to login page
+                }
+              }),
+        ),
       ),
     );
   }
