@@ -6,6 +6,7 @@ import 'package:solace/views/screens/before_login.dart';
 import 'package:solace/views/screens/chat_screen.dart';
 import 'package:solace/views/screens/home_page.dart';
 import 'package:solace/views/screens/login_page.dart';
+import 'package:solace/views/screens/openai_test.dart';
 
 import 'constants.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solace/controllers/openai_service.dart';
+import 'package:solace/models/chat_messages.dart';
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
@@ -9,35 +9,60 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  final OpenAIController x = OpenAIController();
-  String res = "No response Yet";
+  List<ChatMessage> _messages = [];
+  final TextEditingController _controller = TextEditingController();
+
+  Widget _textField() {
+    return Row(
+      children: [
+        Expanded(
+            child: TextField(
+          onSubmitted: (value) => sendMessage(),
+          controller: _controller,
+          decoration: InputDecoration.collapsed(hintText: "Ask your query"),
+        )),
+        IconButton(onPressed: () => sendMessage(), icon: Icon(Icons.send))
+      ],
+    );
+  }
+
+  void sendMessage() {
+    if (_controller.text != "") {
+      ChatMessage _message =
+          ChatMessage(text: _controller.text, sender: "user");
+      setState(() {
+        _messages.insert(0, _message);
+      });
+      _controller.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        width: double.maxFinite,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: () async {
-                    String s =
-                        await x.getResponse("Give some names for mumbai");
-                    setState(() {
-                      res = s;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding:
-                        const EdgeInsets.all(16.0), // Adjust padding as needed
-                  ),
-                  child: Icon(Icons.arrow_forward_ios)),
-              Text(res)
-            ]),
+        // appBar: AppBar(),
+        body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(children: [
+          Flexible(
+              child: ListView.builder(
+            reverse: true,
+            itemCount: _messages.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _messages[index],
+              );
+            },
+          )),
+          Container(
+            decoration: BoxDecoration(),
+            child: _textField(),
+          )
+        ]),
       ),
-    );
+    ));
   }
 }
