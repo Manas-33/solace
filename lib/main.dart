@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solace/views/screens/before_login.dart';
+import 'package:solace/views/screens/chat_screen.dart';
 import 'package:solace/views/screens/home_page.dart';
 import 'package:solace/views/screens/login_page.dart';
 
@@ -51,9 +52,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Solace",
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: LoginBefore()
-      ),
+      home: Scaffold(body: ChatBotScreen()),
     );
   }
 }
