@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:solace/models/chat_messages.dart';
 
+import '../../controllers/openai_service.dart';
+
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
 
@@ -11,6 +13,7 @@ class ChatBotScreen extends StatefulWidget {
 class _ChatBotScreenState extends State<ChatBotScreen> {
   List<ChatMessage> _messages = [];
   final TextEditingController _controller = TextEditingController();
+  final OpenAIController chatGPT = OpenAIController();
 
   Widget _textField() {
     return Row(
@@ -26,7 +29,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     );
   }
 
-  void sendMessage() {
+  void sendMessage() async {
     if (_controller.text != "") {
       ChatMessage _message =
           ChatMessage(text: _controller.text, sender: "user");
@@ -34,6 +37,13 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         _messages.insert(0, _message);
       });
       _controller.clear();
+
+      await chatGPT.getResponse(_message.text).then((value) {
+        ChatMessage botMessage = ChatMessage(text: value, sender: "bot");
+        setState(() {
+          _messages.insert(0, botMessage);
+        });
+      });
     }
   }
 
