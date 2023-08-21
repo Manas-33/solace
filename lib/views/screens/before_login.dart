@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solace/views/screens/login_page.dart';
+import 'package:solace/views/screens/recommendation.dart';
 
 class LoginBefore extends StatefulWidget {
   const LoginBefore({super.key});
@@ -34,7 +35,7 @@ class _LoginBeforeState extends State<LoginBefore> {
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => LoginPage()));
+                        MaterialPageRoute(builder: (context) => Recommendation()));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),

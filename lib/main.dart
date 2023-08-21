@@ -1,17 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:solace/views/screens/before_login.dart';
-import 'package:solace/views/screens/chat_screen.dart';
-import 'package:solace/views/screens/home_page.dart';
-import 'package:solace/views/screens/login_page.dart';
-import 'package:solace/views/screens/openai_test.dart';
 
-import 'constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -53,7 +49,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Solace",
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: ChatBotScreen()),
+      home: Scaffold(body: LoginBefore()),
     );
   }
 }
