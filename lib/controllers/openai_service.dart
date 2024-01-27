@@ -16,7 +16,7 @@ class OpenAIController {
           "messages": [
             {
               'role': 'user',
-              'content': '$prompt. Answer very shortly in 5 words.',
+              'content': '$prompt summarize and simplify this indian law',
             }
           ],
         }),
