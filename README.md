@@ -65,6 +65,6 @@ lib/
 ├── models/             # Data models (ChatMessage, Quote, YogaPose, etc.)
 ├── views/
 │   └── screens/        # App screens (chat, login, quotes, yoga, etc.)
-├── constants.dart      # App-wide constants and theme colours
+├── constants.dart      # App-wide constants and theme colors
 └── main.dart           # Entry point
 ```
